@@ -51,7 +51,7 @@ const onReadyState = (cb) => {
   });
 };
 
-function MyCore({ mounter }) {
+function MyCore({ mounter, pageAt }) {
   let onlineMap = new Map();
   let cableMap = new Map();
   let globalsMap = new Map();
@@ -174,6 +174,7 @@ function MyCore({ mounter }) {
         waitFor,
         clean,
         lowdb: lowdb,
+        pageAt: pageAt,
       });
       onlineMap.set(box._id, true);
     }
@@ -199,7 +200,7 @@ function MyCore({ mounter }) {
   return;
 }
 
-export async function main({ mounter }) {
+export async function main({ mounter, pageAt }) {
   if (process.env.NODE_ENV === "production") {
     let meta = require("./meta.json");
     db.setState(meta).write();
@@ -235,7 +236,7 @@ export async function main({ mounter }) {
 
     let loading = document.createElement("div");
     loading.innerHTML = `
-      <div>
+      <div>s
         <div>Connecting to EffectNode Studio...</div>
         <a style="text-align: center; display: inline-block; width: 100%; font-size: 20px; text-decoration: underline; color: #238823;" href="${window.location.href}">Click here to try again</a>
       </div>
@@ -248,7 +249,7 @@ export async function main({ mounter }) {
   }
 
   onReadyState(() => {
-    MyCore({ mounter });
+    MyCore({ mounter, pageAt });
   });
 }
 
